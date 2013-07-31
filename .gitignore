@@ -14,5 +14,7 @@
 /log/*.log
 /tmp
 
+/public
+
 *.swp
 *.swo
