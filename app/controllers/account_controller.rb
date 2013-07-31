@@ -11,7 +11,7 @@ class AccountController < ApplicationController
 
   def logout
     logout_user
-    redirect_to :home
+    redirect_to root_path
   end
 
   private
@@ -21,7 +21,7 @@ class AccountController < ApplicationController
   end
 
   def password_authentication
-    user = User.try_to_login(params[:email], params[:password])
+    user = User.try_to_login(params[:login], params[:password], params[:kind])
 
     if user.nil?
       invalid_credentials
@@ -32,12 +32,12 @@ class AccountController < ApplicationController
 
   def successful_authentication(user)
     self.logged_user = user
-    redirect_back_or_default my_data_path
+    redirect_back_or_default user.kind == :teacher ? "/" : "/"
   end
 
   def invalid_credentials
     logger.warn "Failed login for '#{params[:email]}' from #{request.remote_ip} at #{Time.now.utc}"
-    flash.now[:error] = l('account.login.notice_invalid_creditentials')
+    flash.now[:error] = "Invalid credentials"
   end
 end
 

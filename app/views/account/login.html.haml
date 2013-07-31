@@ -1,1 +1,19 @@
 %p.lead Create account or login:
+
+- if flash[:error]
+  %p.alert.alert-error= flash[:error]
+
+= form_tag(login_path, :class => "form-horizontal") do 
+  = back_url_hidden_field_tag 
+  .control-group
+    %label.control-label Login:
+    .controls
+      = text_field_tag 'login', nil, :tabindex => 1, :class => :full_length 
+  .control-group
+    %label.control-label Password:
+    .controls
+      = password_field_tag 'password', nil, :tabindex => 2, :class => :full_length
+  .control-group
+    .controls
+      = submit_tag "Login", :tabindex => 3, :class => "btn"
+

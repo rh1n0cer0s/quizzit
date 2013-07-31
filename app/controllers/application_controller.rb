@@ -16,16 +16,6 @@ class ApplicationController < ActionController::Base
   end
 
   def session_expired?
-    if Flossmarket::Config.session_lifetime?
-      unless session[:ctime] && (Time.now.utc.to_i - session[:ctime].to_i <= Flossmarket::Config.session_lifetime.to_i * 60)
-        return true
-      end
-    end
-    if Flossmarket::Config.session_timeout?
-      unless session[:atime] && (Time.now.utc.to_i - session[:atime].to_i <= Flossmarket::Config.session_timeout.to_i * 60)
-        return true
-      end
-    end
     false
   end
 
@@ -42,7 +32,7 @@ class ApplicationController < ActionController::Base
 
   def find_current_user
     if session[:user_id]
-      (User.active.find(session[:user_id]) rescue nil)
+      (User.find(session[:user_id]) rescue nil)
     end
   end
 
@@ -52,7 +42,7 @@ class ApplicationController < ActionController::Base
       User.current = user
       start_user_session(user)
     else
-      User.current = User.anonymous
+      User.current = nil
     end
   end
 
@@ -81,11 +71,11 @@ class ApplicationController < ActionController::Base
   end
 
   def require_logged_in
-    require_login unless User.current.logged? 
+    require_login unless User.current
   end
 
   def require_login
-    if !User.current.logged?
+    if !User.current
       if request.get?
         url = url_for(params)
       else
@@ -99,13 +89,18 @@ class ApplicationController < ActionController::Base
     true
   end
 
+
   def require_logout
-    if User.current && User.current.logged?
+    if User.current 
       respond_to do |format|
-        format.html { redirect_to :controller => "/my", :action => "data" }
+        format.html { redirect_to :controller => "quizzes", :action => "index" }
       end
       return false
     end
+  end
+
+  def require_teacher
+    User.current && User.current.teacher?
   end
 
   def render_403(options={})

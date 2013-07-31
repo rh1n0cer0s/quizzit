@@ -10,15 +10,23 @@
   %body
     .container-narrow
       .masthead
-        -#%ul.nav.nav-pills.pull-right
-          -#%li aaa
-        %h3 Quizzit
+        %ul.nav.nav-pills.pull-right
+          - if User.current
+            %li
+              = link_to logout_path do
+                %i.icon.icon-off
+                Logout
+        %h3= link_to "Quizzit", root_path
 
       %hr
 
       = yield
 
       %hr
+
+      - if Rails.env.development?
+        %pre
+          = session.to_yaml
 
       .footer
         %p Copyright &copy; Kindoo Inc.

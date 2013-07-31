@@ -6,12 +6,13 @@ class User < ActiveRecord::Base
 
   validates :login,
     :presence => true,
+    :uniqueness => {:case_sensitive => false},
     :length => {:maximum => 50}
   validates :email, 
-    :presence => true,
     :uniqueness => {:case_sensitive => false},
-    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => false},
+    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true},
     :length => {:maximum => 60, :allow_nil => true}
+  validates :kind, presence: true, inclusion: { in: [:student, :teacher] }
   validates_confirmation_of :password, :allow_nil => true
 
   validate :validate_password_length
@@ -20,6 +21,18 @@ class User < ActiveRecord::Base
 
   has_many :results
   has_many :quizzes, :through => :results
+
+  def kind
+    read_attribute(:kind).to_sym
+  end
+
+  def teacher?
+    kind == :teacher
+  end
+
+  def student?
+    kind == :student
+  end
 
   def update_hashed_password
     if self.password 
@@ -36,20 +49,26 @@ class User < ActiveRecord::Base
     self.hashed_password = User.hash_password("#{salt}#{User.hash_password clear_password}")
   end
 
-  def self.try_to_login(email, password)
-    email = email.to_s
+  def self.try_to_login(login, password, kind)
+    login = login.to_s
     password = password.to_s
 
     return nil if password.empty?
-    user = find_by_email(email)
-    if user
-      return nil if !user.active?
+    user = find_by_login_and_kind(login, kind)
+    if user 
       return nil unless user.check_password?(password)
-
       user.update_attribute(:last_login, Time.now) if user && !user.new_record?
       user
     else 
-      nil
+      user = User.new
+      user.login = login
+      user.password = password
+      user.password_confirmation = password
+      user.last_login = Time.now
+      user.kind = kind
+      user.save
+      puts user.errors.to_yaml
+      user
     end
   rescue => text
     raise text
