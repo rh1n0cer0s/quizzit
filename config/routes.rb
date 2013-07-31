@@ -1,4 +1,18 @@
 Quizzit::Application.routes.draw do
+  resources :users
+  
+  root :to => 'welcome#index'
+
+  scope ":kind" do
+    match 'login', :to => 'account#login', :as => 'login'
+    match 'logout', :to => 'account#logout', :as => 'logout'
+  end
+
+  #scope "student" do
+    #match 'login', :to => 'account#login', :as => 'login'
+    #match 'logout', :to => 'account#logout', :as => 'logout'
+  #end
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
