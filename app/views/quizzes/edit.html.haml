@@ -2,8 +2,11 @@
   %li
     = link_to "Quizzes", quizzes_path
     %span.divider &raquo;
-  %li New
+  %li 
+    = link_to @quiz.name, quiz_path(@quiz)
+    %span.divider &raquo;
+  %li Edit
 
-%h4 New Quiz
+%h4 Edit Quiz
 
 = render "form"

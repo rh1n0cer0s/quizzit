@@ -8,10 +8,10 @@ class User < ActiveRecord::Base
     :presence => true,
     :uniqueness => {:case_sensitive => false},
     :length => {:maximum => 50}
-  validates :email, 
-    :uniqueness => {:case_sensitive => false},
-    :format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true},
-    :length => {:maximum => 60, :allow_nil => true}
+  #validates :email, 
+    #:uniqueness => {:case_sensitive => false},
+    #:format => {:with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :allow_blank => true},
+    #:length => {:maximum => 60, :allow_nil => true}
   validates :kind, presence: true, inclusion: { in: [:student, :teacher] }
   validates_confirmation_of :password, :allow_nil => true
 
@@ -80,6 +80,10 @@ class User < ActiveRecord::Base
 
   def self.current
     @current_user
+  end
+
+  def to_s
+    self.login
   end
 
   private

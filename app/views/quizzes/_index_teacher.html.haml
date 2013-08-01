@@ -1,0 +1,21 @@
+- unless @quizzes.empty?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Student count
+        %th.span1
+    %tbody
+    - @quizzes.each do |q|
+      %tr
+        %td= q.name
+        %td= q.results.length
+        %td
+          = link_to quiz_path(q) do
+            %i.icon.icon-search
+  %p.text-right
+    = link_to "Create another one!", new_quiz_path, :class => "btn btn-success"
+- else
+  %p.alert.alert-warning 
+    Sorry mate, no quizzes here!
+    = link_to "Add one!", new_quiz_path

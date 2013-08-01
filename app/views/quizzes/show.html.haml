@@ -1,0 +1,66 @@
+%ul.breadcrumb
+  %li
+    = link_to "Quizzes", quizzes_path
+    %span.divider &raquo;
+  %li 
+    = @quiz.name
+
+- if flash[:notice]
+  %p.alert.alert-info= flash[:notice]
+
+- if User.current && User.current.teacher?
+  %ul.nav.nav-pills.pull-right
+    %li
+      = link_to edit_quiz_path(@quiz) do
+        %i.icon.icon-pencil
+        Edit
+    %li
+      = link_to quiz_path(@quiz), :method => :delete, :confirm => "Are you sure you want to delete this quiz?" do
+        %i.icon.icon-trash
+        Delete
+
+%h3= @quiz.name
+
+%h4 Questions
+
+- unless @quiz.questions.empty?
+  - @quiz.questions.each do |q|
+    = link_to edit_quiz_question_path(@quiz, q), :class => "pull-right" do
+      %i.icon.icon-search
+    %h6= q.title
+    - unless q.answers.empty?
+      %ul
+        - q.answers.each do |a|
+          %li 
+            = a.title
+            - if a.correct
+              %i.icon.icon-ok
+    - else
+      No anwsers yet.
+  %p.text-right
+    = link_to "Add more questions!", new_quiz_question_path(:quiz_id => @quiz), :class => "btn btn-success"
+- else
+  %p.alert.alert-warning 
+    No questions for this quiz.
+    - if User.current && User.current.teacher?
+      = link_to "Add one!", new_quiz_question_path(:quiz_id => @quiz)
+
+%h4 Results
+- unless @quiz.results.empty?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Student name
+        %th Result
+        %th.span1
+    %tbody
+    - @quiz.results.each do |r|
+      %tr
+        %td= r.user.login
+        %td= r
+        %td
+          = link_to quiz_result_path(@quiz, r) do
+            %i.icon.icon-search
+- else
+  %p.alert.alert-warning 
+    No students have take this quiz tet.

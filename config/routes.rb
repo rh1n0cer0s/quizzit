@@ -6,7 +6,14 @@ Quizzit::Application.routes.draw do
     match 'quizzes',  :to => 'quizzes#index', :as => 'home'
   end
 
-  resources :quizzes
+  resources :quizzes do
+    member do
+      get 'take', :to => "quizzes#take"
+      post 'take', :to => "quizzes#take"
+    end
+    resources :questions
+    resources :results
+  end
   match 'logout', :to => 'account#logout', :as => 'logout'
 
   #scope "student" do

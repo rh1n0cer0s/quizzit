@@ -1,0 +1,19 @@
+- unless @quizzes.empty?
+  %table.table.table-striped
+    %thead
+      %tr
+        %th Name
+        %th Score
+        %th.span1
+    %tbody
+    - @quizzes.each do |q|
+      %tr
+        %td= q.name
+        %td= q.result_for(User.current) || "Not attempted yet"
+        %td
+          - if User.current.student?
+            = link_to quiz_take_path(q) do
+              %i.icon.icon-forward
+- else
+  %p.alert.alert-warning 
+    Sorry mate, no quizzes for today!

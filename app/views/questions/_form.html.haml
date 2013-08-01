@@ -1,0 +1,43 @@
+= labelled_form_for(@question, :url => @question.new_record? ? quiz_questions_path(:quiz_id => @quiz) : quiz_question_path(:quiz_id => @quiz, :id => @question), :class => "answers-form") do |f|
+  = f.hidden_field :quiz_id
+  = f.text_field :title
+
+  %h4 Answers
+
+  %table.table.table-striped.answers-table
+    %thead
+      %tr
+        %th 
+          %i.icon.icon-ok
+        %th Title
+        %th.span1
+    %tbody
+      - @question.answers.each do |a|
+        %tr
+          %td
+            = hidden_field_tag "question[answers_attributes][][correct]", "0"
+            = check_box_tag "question[answers_attributes][][correct]", "1", a.correct
+          %td= text_field_tag "question[answers_attributes][][title]", a.title
+          %td
+            %a{:href => "#", :class => "delete-answer"}
+              %i.icon.icon-trash
+          = hidden_field_tag "question[answers_attributes][][id]", a.id
+          = hidden_field_tag "question[answers_attributes][][_destroy]", "0", :class => "input-destroy"
+      %tr.template.new-record
+        %td
+          = hidden_field_tag "question[answers_attributes][][correct]", "0"
+          = check_box_tag "question[answers_attributes][][correct]", "1", false
+        %td= text_field_tag "question[answers_attributes][][title]", ""
+        %td
+          %a{:href => "#", :class => "delete-answer"}
+            %i.icon.icon-trash
+        = hidden_field_tag "question[answers_attributes][][id]", ""
+        = hidden_field_tag "question[answers_attributes][][_destroy]", "0", :class => "input-destroy"
+      %tr
+        %td.text-right{:colspan => 3}
+          = link_to "Create one!", new_quiz_path, :class => "btn btn-success btn-mini pull-right add-answer"
+
+  -#= f.fields_for :answers do |fa|
+    -#= fa.text_field :title
+
+  = f.save_button @question.new_record? ? "Create!" : "Save!"

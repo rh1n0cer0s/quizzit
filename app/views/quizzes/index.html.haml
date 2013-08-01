@@ -1,18 +1,8 @@
 %h4 Quizzit Home
 
-- unless @quizzes.empty?
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Name
-        %th.span1
-    %tbody
-    - @quizzes.each do |q|
-      %tr
-        %td= q.name
+- if User.current.teacher?
+  = render "index_teacher"
 - else
-  %p.alert.alert-warning 
-    Sorry mate, no quizzes today!
-    - if User.current && User.current.teacher?
-      = link_to "Add one!", new_quiz_path
+  = render "index_student"
+
 

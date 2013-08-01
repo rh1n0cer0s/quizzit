@@ -1,0 +1,12 @@
+%ul.breadcrumb
+  %li
+    = link_to "Quizzes", quizzes_path
+    %span.divider &raquo;
+  %li 
+    = link_to @quiz.name, quiz_path(@quiz)
+    %span.divider &raquo;
+  %li New question
+
+%h4 New Question
+
+= render "form"

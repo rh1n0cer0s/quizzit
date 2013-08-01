@@ -1,0 +1,33 @@
+%ul.breadcrumb
+  %li
+    = link_to "Quizzes", quizzes_path
+    %span.divider &raquo;
+  %li 
+    = link_to @quiz.name, quiz_path(@quiz)
+    %span.divider &raquo;
+  %li 
+    Results for
+    %em= @result.user
+
+%h3 Quiz results
+
+%dl.dl-horizontal
+  %dt User
+  %dd= @result.user
+  %dt Quiz
+  %dd= @result.quiz
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Question
+      %th Answer
+  %tbody
+  - @result.quiz.questions.each do |q|
+    %tr
+      %td= q.title
+      %td
+        - if@result.answer_for(q)
+          %i.icon.icon-ok
+        - else
+          %i.icon.icon-remove

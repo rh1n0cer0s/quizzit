@@ -1,0 +1,23 @@
+%h3 
+  Taking the Quiz
+  %em= @quiz.name
+
+- if @question
+  %h4 
+    Question
+    %em= @question.title
+
+  = form_tag("", :class => "quiz-form", :data => {:remote => true}) do 
+    = hidden_field_tag "question_id", @question.id
+    = hidden_field_tag "answers[]", ""
+    - @question.answers.each do |a|
+      %p
+        %label.checkbox
+          = check_box_tag "answers[]", a.id, false, :autocomplete => "off"
+          = a.title
+    %button.btn.btn-success{:type => "submit", :data => {"loading-text" => "Wait for it..."}}
+      Continue
+- else
+  %p.lead 
+    Thanks, quiz completed! Your score is #{@result.percent}%.
+  %p= link_to "Back", quizzes_path

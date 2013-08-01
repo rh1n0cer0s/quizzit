@@ -16,7 +16,8 @@
               = link_to logout_path do
                 %i.icon.icon-off
                 Logout
-        %h3= link_to "Quizzit", root_path
+                %em= User.current.login
+        %h2= link_to "Quizzit", root_path
 
       %hr
 
