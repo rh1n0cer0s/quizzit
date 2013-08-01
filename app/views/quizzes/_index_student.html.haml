@@ -11,9 +11,8 @@
         %td= q.name
         %td= q.result_for(User.current) || "Not attempted yet"
         %td
-          - if User.current.student?
-            = link_to quiz_take_path(q) do
-              %i.icon.icon-forward
+          = link_to take_quiz_path(q) do
+            %i.icon.icon-forward
 - else
   %p.alert.alert-warning 
     Sorry mate, no quizzes for today!
