@@ -1,6 +1,6 @@
 require 'action_view/helpers/form_helper'
 
-class Quizzit::Views::LabelledFormBuilder < ActionView::Helpers::FormBuilder
+class Quizzy::Views::LabelledFormBuilder < ActionView::Helpers::FormBuilder
   (field_helpers.map(&:to_s) - %w(radio_button file_field check_box hidden_field fields_for) + %w(date_select)).each do |selector|
     src = <<-END_SRC
     def #{selector}(field, options = {})
@@ -60,7 +60,7 @@ class Quizzit::Views::LabelledFormBuilder < ActionView::Helpers::FormBuilder
                           :for => (@object_name.to_s.gsub(/[\[\]]/,'_') + "_" + field.to_s).gsub(/__/, '_'))
   end
 
-  def save_button text
+  def submit_button text
     @template.content_tag :div, :class => "control-group" do
       @template.concat(@template.content_tag(:div, :class => "controls") do
         @template.concat(@template.content_tag(:button, text, :class => "btn btn-primary", :type => "submit"))

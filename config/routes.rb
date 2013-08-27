@@ -1,10 +1,9 @@
-Quizzit::Application.routes.draw do
+Quizzy::Application.routes.draw do
   root :to => 'welcome#index'
 
-  scope ":kind" do
-    match 'login', :to => 'account#login', :as => 'login'
-    match 'quizzes',  :to => 'quizzes#index', :as => 'home'
-  end
+  match 'login', :to => 'account#login', :as => 'login'
+  match 'signup', :to => 'account#signup', :as => 'signup'
+  match 'logout', :to => 'account#logout', :as => 'logout'
 
   resources :quizzes do
     member do
@@ -14,7 +13,7 @@ Quizzit::Application.routes.draw do
     resources :questions
     resources :results
   end
-  match 'logout', :to => 'account#logout', :as => 'logout'
+  resources :teams
 
   #scope "student" do
     #match 'login', :to => 'account#login', :as => 'login'

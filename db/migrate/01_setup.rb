@@ -1,12 +1,18 @@
 class Setup < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.column 'login',           :string,  :limit => 50,                           :null => false
       t.column 'email',           :string,  :limit => 60,   :default => '',         :null => false
       t.column 'kind',            :string,                  :default => 'student',  :null => false
       t.column 'hashed_password', :string,  :limit => 40,   :default => ''
       t.column 'salt',            :string,  :limit => 64
       t.column 'last_login',      :datetime
+      t.column 'team_id',         :integer
+
+      t.timestamps
+    end
+
+    create_table :teams do |t|
+      t.column 'name',            :string,  :limit => 100,                          :null => false
 
       t.timestamps
     end

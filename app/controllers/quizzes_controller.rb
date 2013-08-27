@@ -1,9 +1,13 @@
 class QuizzesController < ApplicationController
   before_filter :require_login
-  before_filter :require_teacher, :except => [:index, :take]
+  before_filter :require_leader, :except => [:index, :take]
 
   def index
-    @quizzes = Quiz.scoped
+    if User.current && User.current.leader? && !User.current.team
+      redirect_to new_team_path
+    else
+      @quizzes = Quiz.scoped
+    end
   end
 
   def new

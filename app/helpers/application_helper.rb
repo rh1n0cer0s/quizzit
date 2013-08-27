@@ -14,7 +14,7 @@ module ApplicationHelper
     html = {:class => "form-horizontal #{'wide' if options.delete(:wide)} #{options.delete(:class)}"}
     html[:data] ||= {}
     html[:data][:observe] = true if options.delete(:observe)
-    options.merge!({:builder => Quizzit::Views::LabelledFormBuilder, :html => html})
+    options.merge!({:builder => Quizzy::Views::LabelledFormBuilder, :html => html})
     form_for(*args, &proc)
   end
 end

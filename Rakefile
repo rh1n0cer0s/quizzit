@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Quizzit::Application.load_tasks
+Quizzy::Application.load_tasks

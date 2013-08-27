@@ -1,0 +1,16 @@
+%p.lead Sign-up:
+
+- if flash[:error]
+  %p.alert.alert-error= flash[:error]
+
+= labelled_form_for(@user, :url => signup_path) do |f|
+  = back_url_hidden_field_tag 
+  = f.text_field :email
+  = f.password_field :password
+  = f.password_field :password_confirmation
+  = f.submit_button "Sign-up!"
+  .control-group
+    .controls.text-small
+      Already have an account? 
+      = link_to "Login!", login_path
+

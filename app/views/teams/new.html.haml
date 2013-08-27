@@ -1,0 +1,10 @@
+%p.lead Create your team:
+
+- if flash[:error]
+  %p.alert.alert-error= flash[:error]
+
+= labelled_form_for(@team) do |f|
+  = f.text_field :name
+  %p Invite Team Members:
+  -#= f.fields_for :users do
+

@@ -43,13 +43,19 @@ ActiveRecord::Schema.define(:version => 1) do
     t.datetime "updated_at",                :null => false
   end
 
+  create_table "teams", :force => true do |t|
+    t.string   "name",       :limit => 100, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
   create_table "users", :force => true do |t|
-    t.string   "login",           :limit => 50,                        :null => false
     t.string   "email",           :limit => 60, :default => "",        :null => false
     t.string   "kind",                          :default => "student", :null => false
     t.string   "hashed_password", :limit => 40, :default => ""
     t.string   "salt",            :limit => 64
     t.datetime "last_login"
+    t.integer  "team_id"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
   end

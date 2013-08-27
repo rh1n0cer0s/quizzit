@@ -1,8 +1,7 @@
-%h4 Quizzit Home
+%h4 Quizzy Home
 
-- if User.current.teacher?
+- if User.current.leader?
   = render "index_teacher"
 - else
   = render "index_student"
-
 

@@ -99,8 +99,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def require_teacher
-    redirect_to root_path unless User.current && User.current.teacher?
+  def require_leader
+    redirect_to root_path unless User.current && User.current.leader?
   end
 
   def render_403(options={})

@@ -1,13 +1,8 @@
 .jumbotron
-  %h1.centered Take quizzes and see your results!
-  %br
-  %p.lead 
-    Instantly take quizzes and check if you answered correctly. 
-    %br
-    All this possible only with <strong>Quizzit</strong>!
+  %h1.centered Welcome to Quizzy!
   %br
   .row-fluid
     .span4.offset2
-      %p= link_to "Teacher", home_path(:kind => "teacher"), :class => "btn btn-large btn-success"
+      %p= link_to "Sign-up", signup_path, :class => "btn btn-large btn-success"
     .span4
-      %p= link_to "Student", home_path(:kind => "student"), :class => "btn btn-large btn-info"
+      %p= link_to "Login", login_path, :class => "btn btn-large btn-info"

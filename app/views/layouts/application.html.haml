@@ -1,7 +1,7 @@
 !!! 5
 %html{:lang => I18n.locale}
   %head
-    %title Quizzit Webapp
+    %title Quizzy Webapp
     %meta{:name => :viewport, :content => "width=device-width, initial-scale=1.0"}
     %meta{:name => :robots, :content => :noindex }
     =csrf_meta_tag
@@ -16,8 +16,8 @@
               = link_to logout_path do
                 %i.icon.icon-off
                 Logout
-                %em= User.current.login
-        %h2= link_to "Quizzit", root_path
+                %em= User.current.email
+        %h2= link_to "Quizzy", root_path
 
       %hr
 
@@ -30,6 +30,6 @@
           = session.to_yaml
 
       .footer
-        %p Copyright &copy; Kindoo Inc.
+        %p &copy; 2013 Kindoo Inc.
     =javascript_include_tag 'application'
 
