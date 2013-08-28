@@ -6,5 +6,7 @@
 = labelled_form_for(@team) do |f|
   = f.text_field :name
   %p Invite Team Members:
-  -#= f.fields_for :users do
+  = f.fields_for :members do |mf|
+    = mf.text_field :email
+  = f.submit_button "Create!"
 

@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(:version => 1) do
 
   create_table "users", :force => true do |t|
     t.string   "email",           :limit => 60, :default => "",        :null => false
-    t.string   "kind",                          :default => "student", :null => false
+    t.string   "kind",                          :default => "learner", :null => false
     t.string   "hashed_password", :limit => 40, :default => ""
     t.string   "salt",            :limit => 64
     t.datetime "last_login"
